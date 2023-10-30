@@ -1,0 +1,15 @@
+dash==2.14.0
+dash-bootstrap-components==1.5.0
+dash-core-components==2.0.0
+dash-html-components==2.0.0
+dash-iconify==0.1.2
+dash-mantine-components==0.10.2
+dash-table==5.0.0
+dash-tools==1.11.1
+pinecone-client==2.2.4
+pandas==1.5.3
+plotly==5.17.0
+sentence-transformers==0.1.97
+numpy==1.22.4
+json5==0.9.6
+python-dateutil==2.8.2
