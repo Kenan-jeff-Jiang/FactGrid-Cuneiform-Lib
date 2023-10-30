@@ -75,7 +75,7 @@ app.layout = html.Div([
     html.Div(id='insert-doc-output', style={'margin-left': '20px', 'margin-top': '20px'}),  # Display the result of the insert-doc-button click
     html.Hr(style={'border-top': '3px solid #00ff00', 'margin-top': '20px'}),  # Colorful line
     html.H2("Support", style={'margin-left': '20px', 'margin-top': '20px'}),  # Text header for Support
-    html.P("For maintenance/participation, please email kenanjeffjiang@gmail.com. If you find our search useful, give us a Thumb Up 👍:)", style={'margin-left': '20px', 'margin-top': '10px'}),
+    html.P("For maintenance/participation, please email kenanjeffjiang@gmail.com. If you find our search useful, give us a Thumb Up 👍:) to repo: https://github.com/Kenan-jeff-Jiang/FactGrid-Cuneiform-Lib", style={'margin-left': '20px', 'margin-top': '10px'}),
     html.P("To make your document safely collected in our library, please email ane.pdf.share@gmail.com", style={'margin-left': '20px', 'margin-top': '10px'}),
     # html.Div([html.Button(id='thumb-up-button', n_clicks=0, children='👍', style=button_style),
     #           html.Div(id='thumb-up-count', style={'margin-left': '20px', 'font-size': '20px', 'margin-top': '25px'})], 
