@@ -8,8 +8,7 @@ dash-table==5.0.0
 dash-tools==1.11.1
 pinecone-client==2.2.4
 pandas==1.5.3
-plotly==5.17.0
-sentence-transformers==0.1.97
+sentence-transformers
 numpy==1.22.4
 json5==0.9.6
 python-dateutil==2.8.2
