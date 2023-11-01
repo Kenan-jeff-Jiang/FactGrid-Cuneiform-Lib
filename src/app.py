@@ -27,7 +27,9 @@ button_style = {
 }
 
 def search_similar(text, top_k=10):
+    print("start embedding")
     vector = np.float64(model.encode(text.replace("\n", "")))
+    print("end embedding")
     result = index.query(vector=list(vector),top_k=top_k,include_values=False)["matches"]
     for i in result:
         i["page"] = i["id"].split("_")[-1]
@@ -90,6 +92,7 @@ app.layout = html.Div([
     Input("search-input", "value")]
 )
 def update_search_results(n_clicks, search_query):
+    print("request recieved")
     # Replace this with your actual search function
     if search_query and n_clicks > 0:
         # Implement your search logic here
