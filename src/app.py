@@ -28,16 +28,16 @@ button_style = {
 
 def search_similar(text, top_k=10):
     print("start embedding")
-    vector = np.float64(model.encode(text.replace("\n", "")))
+    # vector = np.float64(model.encode(text.replace("\n", "")))
     print("end embedding")
-    result = index.query(vector=list(vector),top_k=top_k,include_values=False)["matches"]
-    for i in result:
-        i["page"] = i["id"].split("_")[-1]
-        i["id"] = i["id"][:-(len(i["page"])+1)]
+    # result = index.query(vector=list(vector),top_k=top_k,include_values=False)["matches"]
+    # for i in result:
+    #     i["page"] = i["id"].split("_")[-1]
+    #     i["id"] = i["id"][:-(len(i["page"])+1)]
     df = pd.DataFrame()
-    df["file_name"] = [i["id"] for i in result]
-    df["page"] = [i["page"] for i in result]
-    df["similarity_score"] = [i["score"] for i in result]
+    # df["file_name"] = [i["id"] for i in result]
+    # df["page"] = [i["page"] for i in result]
+    # df["similarity_score"] = [i["score"] for i in result]
     return df
 
 def insert_text_vector(text, file_name, page_number, user_index):
@@ -96,7 +96,7 @@ def update_search_results(n_clicks, search_query):
     # Replace this with your actual search function
     if search_query and n_clicks > 0:
         # Implement your search logic here
-        # search_results = f"You searched for: {search_query}"
+        print(search_query, search_query)
         search_results = search_similar(search_query).to_dict('records')
     else:
         search_results = []
@@ -124,13 +124,6 @@ def insert_vector(n_clicks, insert_text, user_name, file_name, page_number):
         except Exception as e:
             return f"Failed to insert {file_name} due to error {e}", 0
     return '', 0
-
-# @app.callback(
-#     Output('thumb-up-count', 'children'),
-#     Input('thumb-up-button', 'n_clicks')
-# )
-# def update_thumb_up_count(thumb_up_clicks):
-#     return f"{thumb_up_clicks or 0}"
 
 if __name__ == "__main__":
     server.run(port=8080)
