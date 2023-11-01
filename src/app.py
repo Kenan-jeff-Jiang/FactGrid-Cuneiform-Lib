@@ -1,3 +1,4 @@
+import os
 import dash
 from dash import html, dcc
 import dash_bootstrap_components as dbc
@@ -5,14 +6,18 @@ from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
 import pinecone
-from sentence_transformers import SentenceTransformer
-model = SentenceTransformer('all-mpnet-base-v2')
+import requests
+API_URL = "https://krdbb3bjmwqzgvq8.us-east-1.aws.endpoints.huggingface.cloud"
+key = os.environ.get("HUGGING_FACE")
+headers = {"Authorization": f"Bearer {key}"}
+
 pinecone.init(api_key="ff7232e8-2714-42f8-a392-8fa4c1615b0f", environment="us-west4-gcp-free")
 index = pinecone.Index("20231014")
 import numpy as np
 from dash import dash_table
 import json
 from datetime import datetime
+import requests
 allowed_list = json.load(open("allowed_list.json"))
 button_style = {
     'background-color': 'lightblue',
@@ -26,25 +31,27 @@ button_style = {
     'margin-left': '20px'
 }
 
+def query(payload):
+	response = requests.post(API_URL, headers=headers, json=payload)
+	return response.json()
+
 def search_similar(text, top_k=10):
-    print("start embedding")
-    # vector = np.float64(model.encode(text.replace("\n", "")))
-    print("end embedding")
-    # result = index.query(vector=list(vector),top_k=top_k,include_values=False)["matches"]
-    # for i in result:
-    #     i["page"] = i["id"].split("_")[-1]
-    #     i["id"] = i["id"][:-(len(i["page"])+1)]
+    vector = query({"inputs": text.replace("\n", "")})["embeddings"]
+    result = index.query(vector=vector,top_k=top_k,include_values=False)["matches"]
+    for i in result:
+        i["page"] = i["id"].split("_")[-1]
+        i["id"] = i["id"][:-(len(i["page"])+1)]
     df = pd.DataFrame()
-    # df["file_name"] = [i["id"] for i in result]
-    # df["page"] = [i["page"] for i in result]
-    # df["similarity_score"] = [i["score"] for i in result]
+    df["file_name"] = [i["id"] for i in result]
+    df["page"] = [i["page"] for i in result]
+    df["similarity_score"] = [i["score"] for i in result]
     return df
 
 def insert_text_vector(text, file_name, page_number, user_index):
     now_time = int(datetime.now().strftime("%Y%m%d%H%M%S"))
-    vector = np.float64(model.encode(text.replace("\n", "")))
+    vector = query({"inputs": text.replace("\n", "")})["embeddings"]
     vector_name = file_name + "_{}".format(page_number)
-    index.upsert([(vector_name, list(vector), {"user": user_index, "insert_at": now_time})])
+    index.upsert([(vector_name, vector, {"user": user_index, "insert_at": now_time})])
 
 # Create the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -93,10 +100,8 @@ app.layout = html.Div([
 )
 def update_search_results(n_clicks, search_query):
     print("request recieved")
-    # Replace this with your actual search function
     if search_query and n_clicks > 0:
         # Implement your search logic here
-        print(search_query, search_query)
         search_results = search_similar(search_query).to_dict('records')
     else:
         search_results = []
