@@ -64,5 +64,3 @@ st.write("Support")
 st.write("For maintenance/participation, please email kenanjeffjiang@gmail.com. If you find our search useful, give us a Thumb Up 👍:) to repo: https://github.com/Kenan-jeff-Jiang/FactGrid-Cuneiform-Lib")
 st.write("To make your document safely collected in our library, please email ane.pdf.share@gmail.com")
 
-# Note: Streamlit does not support upvoting functionality directly. You can use a different approach for upvoting if needed.
-
