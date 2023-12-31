@@ -72,7 +72,7 @@ app.layout = html.Div([
     ),
     html.Hr(style={'border-top': '3px solid #00ff00', 'margin-top': '20px'}),  # Colorful line
     html.H2("Insert a New Doc", style={'margin-left': '20px', 'margin-top': '20px'}),  # New section
-    dcc.Input(id='new-doc-input', type='text', placeholder='Enter a new document...',
+    dcc.Textarea(id='new-doc-input', placeholder='Enter a new document...',
               style={'margin-left': '20px', 'margin-top': '20px', 'width': '95%', 'height': '50px', 'height': '100px'}),
     html.Div([dcc.Input(id='user_name', type='text', placeholder='Enter user_name here...insert feature only open to limited members...',
               style={'margin-left': '20px', 'margin-top': '20px', 'width': '30%', 'height': '50px'}),
